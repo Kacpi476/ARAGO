@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head><title><%= post.title %></title></head>
+<body>
+    <h1><%= post.title %></h1>
+    <% if (post.image) { %>
+        <img src="<%= post.image %>" width="500" />
+    <% } %>
+    <p><%= post.content %></p>
+    <small>Dodano: <%= post.created_at.toLocaleString() %></small>
+
+    <br><br>
+    <a href="/blog">← Wróć do bloga</a>
+</body>
+</html>

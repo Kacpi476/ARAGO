@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head><title>Dodaj wpis</title></head>
+<body>
+<h1>Dodaj nowy wpis</h1>
+
+<form action="/admin/addpost" method="POST" enctype="multipart/form-data">
+    <label>Tytuł:</label><br />
+    <input type="text" name="title" required /><br /><br />
+
+    <label>Treść:</label><br />
+    <textarea name="content" rows="10" cols="50" required></textarea><br /><br />
+
+    <label>Obrazek:</label><br />
+    <input type="file" name="image" accept="image/*" /><br /><br />
+
+    <button type="submit">Dodaj wpis</button>
+</form>
+
+
+<br/>
+<a href="/admin">Powrót do panelu</a>
+</body>
+</html>

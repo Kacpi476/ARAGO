@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head><title>Panel Admina</title></head>
+<body>
+    <h1>Panel Administratora</h1>
+    <a href="/admin/add">➕ Dodaj nowy wpis</a>
+    <hr />
+
+    <% posts.forEach(post => { %>
+    <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+        <h2><%= post.title %></h2>
+        <% if (post.image) { %>
+            <img src="<%= post.image %>" width="200" />
+        <% } %>
+        <p><%= post.content.substring(0, 100) %>...</p>
+        <small><%= post.created_at.toLocaleString() %></small><br /><br />
+        <a href="/admin/edit/<%= post.id %>">Edytuj</a> |
+        <form action="/admin/delete/<%= post.id %>" method="POST" style="display:inline;" onsubmit="return confirm('Na pewno usunąć?');">
+            <button type="submit">Usuń</button>
+        </form>
+    </div>
+    <% }) %>
+</body>
+</html>
