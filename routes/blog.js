@@ -3,14 +3,11 @@ const router = express.Router();
 const db = require('../config/db');
 
 // Strona główna
-router.get('/', (req, res) => {
-    res.render('pages/home');
-});
 
-router.get('/blog', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
       const [posts] = await db.query('SELECT * FROM posts ORDER BY created_at DESC');
-        res.render('pages/blog', { posts });
+        res.render('pages/home', { posts });
     } catch (err) {
         res.status(500).send('Błąd ładowania bloga');
     }
@@ -44,6 +41,14 @@ res.render('pages/post', { post });
     console.error(err);
     res.status(500).send('Błąd ładowania wpisu');
 }
+});
+
+router.get('/o-nas', (req, res) => {
+    res.render('pages/about');
+});
+
+router.get('/produkty', (req, res) => {
+    res.render('pages/products');
 });
 
 module.exports = router;

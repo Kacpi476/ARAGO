@@ -9,11 +9,66 @@
 <body>
     <%- include('../partials/header') %>
 
+    <div class="main_carousel">
+        <div class="carousel">
+            <div class="numbers_column">
+                <svg id="lines"></svg>
+                <span class="circle active">1</span>
+                <span class="circle">2</span>
+                <span class="circle">3</span>
+            </div>
+            <div class="carousel_text">
+                <div class="carousel_text_inner">
+                    <p class="carousel_category">
+                        KATEGORIA ARTYKYŁU
+                    </p>
+                    <h1 class="carousel_article_title">
+                        ARTYKUŁ I JEGO TEMATYKA
+                    </h1>
+                </div>
+            </div>
+        </div>
+        <div class="button bottom-right">
+            <div class="bottom-right_learnmore">
+                <h1>CZYTAJ WIECEJ</h1>
+                <a href="/">
+                    <img src="img/pointer.svg" alt="pointer"/>
+                </a>
+            </div>
+            <div class="bottom-right_info">
+                <h1>Odkryj więcej</h1>
+                <p>Krótki opis produktu/artykułu promowanego na stronie głównej.</p>
+            </div>
+        </div>
+    </div>
+    <% posts.forEach(post => { %>
+    <div class="post_container">
+        <div class="post_container_inner">
+            <a href="/blog/<%= post.id %>">
+                <img class='post_img' src="<%= post.image %>" alt="photo"/>
+            </a>
+            <div class="post_text">
+                <h1><%= post.title %></h1>
+                <p><%= post.content%></p>
+            </div>
+            <a href="/blog/<%= post.id %>" class="post_pointer">
+                <img src="img/pointer.svg" alt="pointer"/>
+            </a>
+        </div>
+    </div>
+    <% }) %>
+
+
+
+
 <h1>Main page</h1>
 <nav>
     <a href="/blog">Blog</a> |
     <a href="/admin">Panel administratora</a>
     <a href="/login">Login</a>
 </nav>
+
+<script src="../script/script.js"></script>
+<script src="../script/home.js"></script>
 </body>
 </html>
