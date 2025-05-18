@@ -8,21 +8,28 @@
     font-family: "Roboto", sans-serif;
 }
 
+
 body{
     height: 100%;
     width: 100%;
     background-color: white;
+    padding-top: 80px;
 }
 
 /*-------------HEADER--------------*/
 
 header {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 80px;
     max-height: 80px;
     background-color: rgba(248, 248, 255, 0.75);
     padding-left: calc(48px + 16px);
     padding-right: calc(48px + 16px);
+    z-index: 1000; /* Żeby był ponad innymi elementami */
+    backdrop-filter: blur(8px); /* Opcjonalne, dla lepszego efektu wizualnego */
 }
 
 .nav-wrapper {
@@ -84,7 +91,6 @@ header {
     border-bottom: 1px solid black;
     color: black !important;
     transition: all 0.5s ease;
-    padding-bottom: 4px;
     font-weight: bold !important;
 }
 
@@ -520,9 +526,343 @@ header {
 .arago_container img,
 .clarb_container img {
     transition: opacity 0.2s ease-in-out;
+    
 }
 
 
 
 
 /*------------PRODUCTS END--------------*/
+
+/*------------ARAGO PRODUCT--------------*/
+
+
+.carousel_products_container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+.carousel_header {
+    width: 100%;
+    min-height: 130px;
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+.carousel_header_switch{
+    width: 10%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.switch_logo img{
+    width: 77px;
+    height:22px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 96px;
+    height: 48px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #324498;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 48px;
+    width: 48px;
+    left: 0px;
+    bottom: 0px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    box-shadow: inset 0px 0px 5px 0px #0B121566;
+    border: 1px solid black;
+}
+
+input:checked + .slider {
+    background-color: black;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px black;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(48px);
+    -ms-transform: translateX(48px);
+    transform: translateX(48px);
+}
+
+.slider.round {
+    border-radius: 40px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.carousel_header_text {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 8px;
+}
+
+#carouselTitle {
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 46px;
+    letter-spacing: 2px;
+}
+#carouselText {
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 28px;
+    letter-spacing: 2px;
+}
+
+
+.carousel_wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel_viewport {
+    width: 1260px;
+    overflow: hidden;
+}
+
+.carousel_products {
+    display: flex;
+    transition: transform 0.6s ease;
+    gap: 0;
+}
+
+.carousel_products img {
+    width: 420px;
+    height: 650px;
+    object-fit: cover;
+    flex-shrink: 0;
+    filter: blur(2px);
+    opacity: 0.4;
+    transform: scale(0.8);
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.carousel_products img.center {
+    filter: none;
+    opacity: 1;
+    transform: scale(1);
+    z-index: 2;
+}
+
+.carousel_products img.left,
+.carousel_products img.right {
+    filter: blur(2px);
+    opacity: 0.4;
+    transform: scale(0.9);
+    z-index: 1;
+}
+
+.carousel_btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    cursor: pointer;
+    z-index: 2;
+    background: none;
+}
+
+.carousel_btn.left {
+    left: 20px;
+}
+
+.carousel_btn.right {
+    right: 20px;
+}
+
+
+.carousel_dots {
+    width: 100%;
+    min-height: 70px;
+}
+.carousel_dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.carousel_dots .dot {
+    width: 24px;
+    height: 24px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.carousel_dots .dot.active {
+    background-color: black;
+}
+
+.dot-big {
+    width: 16px;
+    height: 16px;
+}
+
+.dot-medium {
+    width: 12px;
+    height: 12px;
+}
+
+.dot-small {
+    width: 8px;
+    height: 8px;
+}
+
+.dot-tiny {
+    width: 6px;
+    height: 6px;
+}
+
+
+.product_info_container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-left: 64px;
+    padding-right: 64px;
+    padding-bottom: 64px;
+    gap: 8px;
+}
+#product_info_h1{
+    font-size: 24px;
+    font-weight: 400;
+    color: #0B1215;
+    padding: 4px 24px 4px 24px;
+    border: 1px solid black;
+    border-radius: 50px;
+    margin-top: 32px;
+}
+
+.product_info_container_wlasciwosci,
+.product_info_container_dane_techniczne,
+.product_info_container_dodatkowe_informacje{
+    width: 100%;
+    height: 100%;
+}
+
+
+.product_text {
+    font-size: 16px;
+    font-weight: 400;
+    text-align: justify;
+    line-height: 120%;
+    letter-spacing: 0.5px;
+}
+
+
+.fade-text {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+.fade-wrapper {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.fade-out {
+    opacity: 0;
+}
+
+.fade-in {
+    opacity: 1;
+}
+
+
+.product_download {
+    position: absolute;
+    width: 350px;
+    height: 180px;
+    padding: 16px;
+    border-radius: 48px;
+    border: 1px solid #0B121540;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    bottom: -250px;
+    right: 64px;
+}
+.product_download_text {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 10px;
+}
+.product_download_text h1 {
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 21px;
+}
+.product_download_text p{
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 16px;
+}
+
+.product_download_description {
+    width: 90%;
+    padding: 8px;
+}
+
+.product_download_description p{
+    font-size: 12px;
+}
+

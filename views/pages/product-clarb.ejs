@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Produkt arago</title>
+    <link rel="stylesheet" href="../css/style.css"/>
+</head>
+<body>
+    <%- include('../partials/header') %>
+    <div class="carousel_products_container">
+
+
+
+        <div class="carousel_header">
+            <div class="carousel_header_switch">
+                <label class="switch">
+                    <input type="checkbox" id="dataSwitch" checked>
+                    <span class="slider round"></span>
+                </label>
+                <div class="switch_logo" >
+                    <img src="/img/products/small_arago.svg" alt="Logo" class="fade-wrapper" id="switchLogo"/>
+                </div>
+            </div>
+            <div class="carousel_header_text fade-wrapper">
+                <h1 id="carouselTitle"></h1>
+                <p id="carouselText"></p>
+            </div>
+            <div class="carousel_header_filter">
+
+            </div>
+        </div>
+
+
+
+        <div class="carousel_wrapper">
+            <button class="carousel_btn left" id="prevBtn">
+                <img src="/img/products/arrow_left.svg" alt="">
+            </button>
+            <div class="carousel_viewport fade-wrapper">
+                <div class="carousel_products" id="carousel">
+                    
+                </div>
+            </div>
+            <button class="carousel_btn right" id="nextBtn">
+                <img src="/img/products/arrow_right.svg" alt="">
+            </button>
+        </div>
+        <div class="carousel_dots">
+            
+        </div>
+
+        <div class="product_download">
+            <div class="product_download_text">
+                <h1>Pobierz<br><p>dokumentacje</p></h1>
+                <a id="download_button" href="/img/pointer.svg" download>
+                    <img src="/img/products/download.svg" alt="">
+                </a>
+            </div>
+            <div class="product_download_description">
+                <p>Pobierz dokumentację by otrzymać pełny spis informacji na temat wybranego produktu w formacie .pdf </p>
+            </div>
+        </div>
+
+
+        <div class="product_info_container fade-wrapper">
+            <h1 id="product_info_h1">Właściwości</h1>
+            <div class="product_info_container_wlasciwosci">
+                <p class="product_text" id="text_wlasciwosci"></p>
+            </div>
+            <h1 id="product_info_h1">Dane techniczne</h1>
+            <div class="product_info_container_dane_techniczne">
+                <p class="product_text" id="text_dane_techniczne"></p>
+            </div>
+            <h1 id="product_info_h1">Dodatkowe informacje</h1>
+            <div class="product_info_container_dodatkowe_informacje">
+                <p class="product_text" id="text_dodatkowe_info"></p>
+            </div>
+        </div>
+
+
+    </div>
+
+<script src="../script/script.js"></script>
+<script src="../script/arago_product.js"></script>
+</body>
+</html>

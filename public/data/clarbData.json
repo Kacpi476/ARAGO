@@ -1,0 +1,65 @@
+{
+    "clarb1": {
+    "src": "/img/background.png",
+    "title": "KLEJ DO STYROPIANU",
+    "carouselText": "CLARB1",
+    "text_wlasciwosci": "<strong>Wysoka przyczepność</strong> – klej zapewnia silne wiązanie z różnymi typami podłoża, takimi jak styropian, wełna mineralna czy beton, co umożliwia trwałe zespolenie siatki z powierzchnią. <br><strong>Elastyczność</strong> – dzięki elastycznej strukturze klej dobrze kompensuje naprężenia termiczne i mechaniczne, które mogą powstać w wyniku zmian temperatury lub ruchów konstrukcyjnych budynku. <br><strong>Odporność na warunki atmosferyczne</strong> – wysokiej jakości kleje są odporne na wilgoć, mróz oraz promieniowanie UV, co sprawia, że nie tracą swoich właściwości nawet w trudnych warunkach zewnętrznych. <br><strong>Paroprzepuszczalność</strong> – umożliwia \"oddychanie\" ścian, co zapobiega gromadzeniu się wilgoci pod warstwą tynku i zwiększa trwałość elewacji. <br><strong>Łatwość aplikacji</strong> – kleje dostępne są najczęściej w formie gotowych mieszanek lub jako suche zaprawy do rozrobienia z wodą, co ułatwia ich przygotowanie i nanoszenie na powierzchnię. <br><strong>Czas otwarty roboczy</strong> – dobre kleje mają odpowiedni czas otwarty, co pozwala na precyzyjne ułożenie siatki bez pośpiechu, zanim klej zacznie wiązać.",
+    "text_dane_techniczne": "<strong>Postać:</strong> sucha mieszanka mineralna (szara lub biała) <br><strong>Baza:</strong> cement portlandzki, wypełniacze mineralne, dodatki modyfikujące <br><strong>Maksymalna frakcja kruszywa:</strong> 0,5 – 1,0 mm <br><strong>Proporcje mieszania z wodą:</strong> ok. 5,0 – 6,5 litra wody na 25 kg suchej masy <br><strong>Czas przydatności do użycia po rozrobieniu:</strong> ok. 1,5 – 2 godziny <br><strong>Temperatura aplikacji:</strong> od +5°C do +25°C <br><strong>Czas otwarty roboczy:</strong> min. 20 minut <br><strong>Grubość warstwy:</strong> 3 – 5 mm (łącznie z siatką) <br><strong>Czas wiązania początkowego:</strong> ok. 4 – 6 godzin <br><strong>Pełne utwardzenie / gotowość do dalszych prac:</strong> po 48 – 72 godzinach <br><strong>Wytrzymałość na zginanie:</strong> ≥ 3,0 MPa <br><strong>Wytrzymałość na ściskanie:</strong> ≥ 6,0 MPa <br><strong>Przyczepność do betonu / styropianu / wełny mineralnej:</strong> ≥ 0,3 – 0,5 MPa (w zależności od producenta) <br><strong>Paroprzepuszczalność:</strong> wysoka (μ ≈ 25 – 35) <br><strong>Odporność na czynniki atmosferyczne:</strong> wysoka (mrozoodporny, wodoodporny) <br><strong>Klasyfikacja według normy EN 998-1:</strong> GP (zaprawa ogólnego przeznaczenia), CS IV (odporność mechaniczna)",
+    "text_dodatkowe_informacje": "Klej do siatki zbrojącej znajduje zastosowanie przede wszystkim w systemach ociepleń budynków, gdzie pełni rolę zaprawy mocującej siatkę zbrojącą z włókna szklanego do warstwy izolacji termicznej, np. styropianu lub wełny mineralnej. Jego głównym zadaniem jest wzmocnienie warstwy zbrojącej i zapewnienie odpowiedniej przyczepności do kolejnych warstw wykończeniowych, takich jak tynk cienkowarstwowy. Stosuje się go także przy renowacjach elewacji, naprawach spękań i wzmocnieniach podłoża pod tynki dekoracyjne. Przed rozpoczęciem aplikacji kleju należy przygotować podłoże – powinno być stabilne, czyste, suche i wolne od kurzu, tłuszczu czy resztek starych powłok. Powierzchnię izolacji (np. styropianu) należy zeszlifować, aby usunąć naskórek technologiczny, a następnie przetrzeć szczotką. Klej przygotowuje się przez wsypanie suchej mieszanki do czystej, chłodnej wody i dokładne wymieszanie mieszadłem wolnoobrotowym do uzyskania jednorodnej konsystencji. Po odczekaniu 5–10 minut zaprawę należy ponownie przemieszać.",
+    "pdf": "/img/test.svg"
+    },
+    "clarb2": {
+        "src": "/img/test.svg",
+        "title": "FARBA ELEWACYJNA",
+        "carouselText": "clarb2",
+        "text_wlasciwosci": "Doskonałe krycie, odporność na warunki atmosferyczne [...]",
+        "text_dane_techniczne": "Rodzaj: akrylowa, Wydajność: 7–10 m²/l [...]",
+        "text_dodatkowe_informacje": "Stosowana w systemach elewacyjnych, szybkoschnąca [...]",
+        "pdf": "/img/test.svg"
+    },
+    "clarb3": {
+        "src": "/img/test.svg",
+        "title": "KLEJ DO STYROPIANU",
+        "carouselText": "clarb3",
+        "text_wlasciwosci": "Wysoka przyczepność – klej zapewnia silne wiązanie z różnymi typami podłoża [...]",
+        "text_dane_techniczne": "Postać: sucha mieszanka mineralna (szara lub biała) [...]",
+        "text_dodatkowe_informacje": "Klej do siatki zbrojącej znajduje zastosowanie [...]",
+        "pdf": "/img/test.svg"
+    },
+    "clarb4": {
+        "src": "/img/test.svg",
+        "title": "KLEJ DO STYROPIANU",
+        "carouselText": "clarb4",
+        "text_wlasciwosci": "Wysoka przyczepność – klej zapewnia silne wiązanie z różnymi typami podłoża [...]",
+        "text_dane_techniczne": "Postać: sucha mieszanka mineralna (szara lub biała) [...]",
+        "text_dodatkowe_informacje": "Klej do siatki zbrojącej znajduje zastosowanie [...]",
+        "pdf": "/img/test.svg"
+    },
+    "clarb5": {
+        "src": "/img/test.svg",
+        "title": "KLEJ DO STYROPIANU",
+        "carouselText": "clarb5",
+        "text_wlasciwosci": "Wysoka przyczepność – klej zapewnia silne wiązanie z różnymi typami podłoża [...]",
+        "text_dane_techniczne": "Postać: sucha mieszanka mineralna (szara lub biała) [...]",
+        "text_dodatkowe_informacje": "Klej do siatki zbrojącej znajduje zastosowanie [...]",
+        "pdf": "/img/test.svg"
+    },
+    "clarb6": {
+        "src": "/img/test.svg",
+        "title": "KLEJ DO STYROPIANU",
+        "carouselText": "clarb6",
+        "text_wlasciwosci": "Wysoka przyczepność – klej zapewnia silne wiązanie z różnymi typami podłoża [...]",
+        "text_dane_techniczne": "Postać: sucha mieszanka mineralna (szara lub biała) [...]",
+        "text_dodatkowe_informacje": "Klej do siatki zbrojącej znajduje zastosowanie [...]",
+        "pdf": "/img/test.svg"
+    },
+    "clarb7": {
+        "src": "/img/test.svg",
+        "title": "7KLEJ DO STYROPIANU",
+        "carouselText": "clarb7",
+        "text_wlasciwosci": "Wysoka przyczepność – klej zapewnia silne wiązanie z różnymi typami podłoża [...]",
+        "text_dane_techniczne": "Postać: sucha mieszanka mineralna (szara lub biała) [...]",
+        "text_dodatkowe_informacje": "Klej do siatki zbrojącej znajduje zastosowanie [...]",
+        "pdf": "/img/test.svg"
+    }
+}

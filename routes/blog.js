@@ -47,8 +47,6 @@ router.get('/o-nas', (req, res) => {
     res.render('pages/about');
 });
 
-router.get('/produkty', (req, res) => {
-    res.render('pages/products');
-});
+
 
 module.exports = router;

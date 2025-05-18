@@ -24,9 +24,11 @@ app.use(session({
 
 const blogRoutes = require('./routes/blog');
 const adminRoutes = require('./routes/admin');
+const productRoutes = require('./routes/productsRoutes')
 
 app.use('/', blogRoutes);
 app.use('/admin', adminRoutes);
+app.use('/produkty', productRoutes);
 
 // Start
 app.listen(3000, () => {
