@@ -3,50 +3,44 @@ const router = express.Router();
 const db = require('../config/db');
 
 // Strona główna
-
 router.get('/', async (req, res) => {
-    try {
-      const [posts] = await db.query('SELECT * FROM posts ORDER BY created_at DESC');
-        res.render('pages/home', { posts });
-    } catch (err) {
-        res.status(500).send('Błąd ładowania bloga');
-    }
+  try {
+    const [posts] = await db.query('SELECT * FROM posts ORDER BY featured DESC, created_at DESC');
+    const [carouselItems] = await db.query('SELECT * FROM carousel ORDER BY created_at DESC LIMIT 3');
+    const carouselJSON = JSON.stringify(carouselItems);
+    res.render('pages/home', { posts, carouselItems });
+  } catch (err) {
+    res.status(500).send('Błąd ładowania');
+  }
 });
-
-// Test połączenia z bazą
-router.get('/test-db', async (req, res) => {
-try {
-    const [rows] = await db.query('SELECT NOW() AS teraz');
-    res.send(`✅ Połączono z MySQL! Aktualny czas: ${rows[0].teraz}`);
-} catch (err) {
-    console.error('❌ Błąd połączenia:', err);
-    res.status(500).send('Błąd połączenia z bazą danych');
-}
-});
-
-
 
 // Pojedynczy wpis bloga
 router.get('/blog/:id', async (req, res) => {
-const postId = req.params.id;
-
-    try {
-      const [rows] = await db.query('SELECT * FROM posts WHERE id = ?', [postId]);
-    if (rows.length === 0) {
-        return res.status(404).send('Nie znaleziono wpisu');
-    }
-const post = rows[0];
-res.render('pages/post', { post });
-} catch (err) {
+  const postId = req.params.id;
+  try {
+    const [rows] = await db.query('SELECT * FROM posts WHERE id = ?', [postId]);
+    if (rows.length === 0) return res.status(404).send('Nie znaleziono wpisu');
+    res.render('pages/post', { post: rows[0] });
+  } catch (err) {
     console.error(err);
     res.status(500).send('Błąd ładowania wpisu');
-}
+  }
 });
 
-router.get('/o-nas', (req, res) => {
-    res.render('pages/about');
+// Strona kariera
+router.get('/kariera', async (req, res) => {
+  try {
+    const [jobs] = await db.query('SELECT * FROM career_offers ORDER BY created_at DESC');
+    res.render('pages/career', { jobs });
+  } catch (err) {
+    res.status(500).send('Błąd ładowania ogłoszeń');
+  }
 });
 
 
+
+router.get('/o-nas', (req, res) => res.render('pages/about'));
+router.get('/dystrybutorzy', (req, res) => res.render('pages/distributors'));
+router.get('/kontakt', (req, res) => res.render('pages/contact'));
 
 module.exports = router;

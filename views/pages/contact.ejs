@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Kontakt</title>
+    <link rel="stylesheet" href="../css/style.css"/>
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+    
+    <div class="contact_container">
+        <div class="contact_inner">
+            <div class="contact-form">
+                <form action="/public/php/send-email.php" method="POST" id="contact-form">
+                    <div class="input-box">
+                        <input type="text" name="contact" required placeholder="adres email / numer telefonu">
+                    </div>
+                    <div class="input-box input_text">
+                        <textarea required="true" name="message" placeholder="wiadomość"></textarea>
+                    </div>
+                    <div class="input_button">
+                        <input type="submit" value="WYŚLIJ">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+<script src="../script/script.js"></script>
+<script src="../script/contact.js"></script>
+</body>
+</html>

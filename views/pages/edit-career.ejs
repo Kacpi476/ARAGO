@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edytuj ofertę pracy</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+  <main class="admin_form_container">
+    <h1>Edytuj ofertę: <%= offer.title %></h1>
+    <form action="/admin/career/edit/<%= offer.id %>" method="POST" class="admin_form">
+      <div class="form_group">
+        <label for="title">Stanowisko</label>
+        <input type="text" id="title" name="title" value="<%= offer.title %>" required />
+      </div>
+
+      <div class="form_group">
+        <label for="salary">Wynagrodzenie</label>
+        <input type="text" id="salary" name="salary" value="<%= offer.salary %>" />
+      </div>
+
+      <div class="form_group">
+        <label for="description">Opis stanowiska</label>
+        <textarea id="description" name="description" rows="10" required><%= offer.description %></textarea>
+      </div>
+
+      <div class="form_group">
+        <label for="link">Link do oferty (opcjonalnie)</label>
+        <input type="text" id="link" name="link" value="<%= offer.link %>" />
+      </div>
+
+      <button type="submit">Zapisz zmiany</button>
+    </form>
+  </main>
+
+</body>
+</html>

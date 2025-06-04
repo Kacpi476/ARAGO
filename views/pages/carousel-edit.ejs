@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8" />
+    <title>Edycja karuzeli - wpis #<%= post.id %></title>
+    <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+    <h1>Edycja wpisu karuzeli #<%= post.id %></h1>
+
+    <form action="/admin/carousel/edit/<%= post.id %>" method="POST" enctype="multipart/form-data">
+        <label for="title">Tytuł:</label><br/>
+        <input type="text" id="title" name="title" value="<%= post.title %>" required /><br/><br/>
+
+        <label for="category">Kategoria:</label><br/>
+        <input type="text" id="category" name="category" value="<%= post.category %>" required /><br/><br/>
+
+        <label for="description">Opis (description):</label><br/>
+        <textarea id="description" name="description" rows="3" required><%= post.description %></textarea><br/><br/>
+
+        <label for="content">Treść (content):</label><br/>
+        <textarea id="content" name="content" rows="6"><%= post.content %></textarea><br/><br/>
+
+        <label for="link">Link:</label><br/>
+        <input type="text" id="link" name="link" value="<%= post.link %>" required /><br/><br/>
+
+        <label for="image">Aktualne zdjęcie:</label><br/>
+        <% if(post.image){ %>
+          <img src="<%= post.image %>" alt="Obrazek" style="max-width:200px;"><br/>
+        <% } else { %>
+          <em>Brak obrazka</em><br/>
+        <% } %>
+        <label for="image">Zmień zdjęcie (opcjonalnie):</label><br/>
+        <input type="file" id="image" name="image" accept="image/*" /><br/><br/>
+
+        <button type="submit">Zapisz zmiany</button>
+    </form>
+
+    <a href="/admin/carousel">Powrót do listy karuzeli</a>
+</body>
+</html>

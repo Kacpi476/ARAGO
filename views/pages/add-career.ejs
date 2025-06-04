@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dodaj ofertę pracy</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+  <main class="admin_form_container">
+    <h1>Dodaj nową ofertę pracy</h1>
+    <form action="/admin/career/add" method="POST" class="admin_form">
+      <div class="form_group">
+        <label for="title">Stanowisko</label>
+        <input type="text" id="title" name="title" required />
+      </div>
+    
+      <div class="form_group">
+        <label for="salary">Wynagrodzenie (np. 6000zł brutto)</label>
+        <input type="text" id="salary" name="salary" />
+      </div>
+    
+      <div class="form_group">
+        <label for="description">Opis stanowiska</label>
+        <textarea id="description" name="description" rows="10" required></textarea>
+      </div>
+    
+      <div class="form_group">
+        <label for="link">Link do oferty (opcjonalnie):</label>
+        <input type="text" id="link" name="link" />
+      </div>
+    
+      <button type="submit">Dodaj ofertę</button>
+    </form>
+
+  </main>
+
+</body>
+</html>

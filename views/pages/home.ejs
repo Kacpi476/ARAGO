@@ -8,6 +8,7 @@
 </head>
 <body>
     <%- include('../partials/header') %>
+    <div class="main_carousel_container">
 
     <div class="main_carousel">
         <div class="carousel">
@@ -27,12 +28,13 @@
                     </h1>
                 </div>
             </div>
+            
         </div>
         <div class="button bottom-right">
             <div class="bottom-right_learnmore">
                 <h1>CZYTAJ WIECEJ</h1>
                 <a href="/">
-                    <img src="img/pointer.svg" alt="pointer"/>
+                    <img src="/img/home/pointer.svg" alt="pointer"/>
                 </a>
             </div>
             <div class="bottom-right_info">
@@ -41,6 +43,8 @@
             </div>
         </div>
     </div>
+
+    
     <% posts.forEach(post => { %>
     <div class="post_container">
         <div class="post_container_inner">
@@ -52,22 +56,25 @@
                 <p><%= post.content%></p>
             </div>
             <a href="/blog/<%= post.id %>" class="post_pointer">
-                <img src="img/pointer.svg" alt="pointer"/>
+                <img src="/img/home/pointer.svg" alt="pointer"/>
             </a>
         </div>
     </div>
     <% }) %>
-
+    </div>
 
 
 
 <h1>Main page</h1>
 <nav>
-    <a href="/blog">Blog</a> |
     <a href="/admin">Panel administratora</a>
     <a href="/login">Login</a>
 </nav>
 
+<script>
+    const carouselData = <%- JSON.stringify(carouselItems) %>;
+    console.log(carouselData);
+</script>
 <script src="../script/script.js"></script>
 <script src="../script/home.js"></script>
 </body>

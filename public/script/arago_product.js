@@ -18,16 +18,11 @@ let currentIndex = 0;
 let carouselData = {};
 let imageData = [];
 
-
-const isChecked = dataSwitch.checked;
-let currentDataFile = isChecked ? 'clarbData.json' : 'aragoData.json';
-switchLogo.src = isChecked
+let currentDataFile = dataSwitch.checked ? 'clarbData.json' : 'aragoData.json';
+switchLogo.src = dataSwitch.checked
     ? '/img/products/small_clarb.svg'
     : '/img/products/small_arago.svg';
 
-
-
-// Wczytywanie danych
 function loadDataAndInitialize() {
     fetch(`/data/${currentDataFile}`)
         .then(response => response.json())
@@ -46,7 +41,6 @@ function loadDataAndInitialize() {
         });
 }
 
-// Fade tekst
 function fadeAndChangeText(element, newText) {
     if (fadeWrapper.classList.contains('fade-out')) {
         element.innerHTML = newText;
@@ -60,7 +54,6 @@ function fadeAndChangeText(element, newText) {
     }, 300);
 }
 
-// Inicjalizacja karuzeli
 function initialize() {
     const clonesStart = imageData.slice(-1);
     const clonesEnd = imageData.slice(0, 2);
@@ -74,19 +67,21 @@ function initialize() {
         carousel.appendChild(image);
     });
 
-    updateTransform();
+    updateDimensions();
     applyClasses();
     createDots();
 }
 
-// Przesuwanie karuzeli
 function updateTransform() {
-    const offset = currentIndex * 420;
+    const centerImg = document.querySelector('.carousel_products img.center') || carousel.querySelector('img');
+    if (!centerImg) return;
+
+    const imgWidth = centerImg.clientWidth;
+    const offset = currentIndex * imgWidth;
     carousel.style.transition = 'transform 0.5s ease-in-out';
     carousel.style.transform = `translateX(-${offset}px)`;
 }
 
-// Nadawanie klas i tekstów
 function applyClasses() {
     const allImages = carousel.querySelectorAll('img');
     allImages.forEach((img, index) => {
@@ -122,7 +117,6 @@ function applyClasses() {
     }
 }
 
-// Tworzenie kropek
 function createDots() {
     dotsContainer.innerHTML = '';
     for (let i = 0; i < imageData.length; i++) {
@@ -134,7 +128,6 @@ function createDots() {
     updateDots();
 }
 
-// Aktualizacja kropek
 function updateDots() {
     const dots = document.querySelectorAll('.carousel_dots .dot');
     dots.forEach(dot => dot.classList.remove('active'));
@@ -144,7 +137,6 @@ function updateDots() {
     }
 }
 
-// Obsługa przycisków
 prevBtn.addEventListener('click', () => {
     currentIndex = (currentIndex - 1 + imageData.length) % imageData.length;
     updateTransform();
@@ -159,7 +151,6 @@ nextBtn.addEventListener('click', () => {
     updateDots();
 });
 
-// Obsługa kliknięcia w kropki
 dotsContainer.addEventListener('click', (e) => {
     if (e.target.classList.contains('dot')) {
         const index = parseInt(e.target.dataset.index);
@@ -170,7 +161,6 @@ dotsContainer.addEventListener('click', (e) => {
     }
 });
 
-// Przełącznik danych (Arago/Clarb)
 dataSwitch.addEventListener('change', () => {
     const isChecked = dataSwitch.checked;
     const fadeElements = document.querySelectorAll('.fade-wrapper');
@@ -197,6 +187,25 @@ dataSwitch.addEventListener('change', () => {
     }, 300);
 });
 
+function updateDimensions() {
+    const wrapper = document.querySelector('.carousel_wrapper');
+    const viewport = document.querySelector('.carousel_viewport');
+    const images = carousel.querySelectorAll('img');
+
+    if (images.length === 0) return;
+
+    const firstImage = images[0];
+
+    const computedStyle = window.getComputedStyle(firstImage);
+    const imgWidth = parseFloat(computedStyle.width);
+
+    viewport.style.width = `${imgWidth * 3}px`;
+
+    updateTransform();
+}
+
+window.addEventListener('resize', updateDimensions);
+window.addEventListener('load', updateDimensions);
 
 // Start
 loadDataAndInitialize();

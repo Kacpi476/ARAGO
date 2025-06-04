@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Dystrybutorzy</title>
+    <link rel="stylesheet" href="../css/style.css"/>
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+    <div class="dystrybutorzy_container">
+        <div class="dystrybutorzy_header">
+            <h1>MAPA DYSTRYBUTORÓW</h1>
+            <p>NASI KONTRAHENCI W POLSCE</p>
+        </div>
+
+
+        <div class="dystrybutorzy_mapa">
+            <div class="map_layer">
+                <a class="map_layer_close"></a>
+                <div class="map_layer_text_column">
+                    <div class="map_layer_text_row">
+                        <h1 id="map_layer_h1"></h1>
+                        <p id="map_layer_p"></p>
+                    </div>
+                </div>
+                <div class="map_layer_province">
+                    <img id="map_layer_province" src="/img/dis/mazowieckie.svg" alt="">
+                </div>
+            </div>
+            <div class="map_img">
+                <div class="map_pointer" id="map_pointer1">
+                    <p>+1</p>
+                    <img src="/img/dis/map_pointer.svg" alt="">
+                </div>
+                <div class="map_pointer" id="map_pointer2">
+                    <p>+2</p>
+                    <img src="/img/dis/map_pointer.svg" alt="">
+                </div>
+                <div class="map_pointer" id="map_pointer3">
+                    <p>+3</p>
+                    <img src="/img/dis/map_pointer.svg" alt="">
+                </div>
+                <div class="map_pointer" id="map_pointer4">
+                    <p>+4</p>
+                    <img src="/img/dis/map_pointer.svg" alt="">
+                </div>
+                <div class="map_pointer" id="map_pointer5">
+                    <p>+5</p>
+                    <img src="/img/dis/map_pointer.svg" alt="">
+                </div>
+                <div class="map_pointer" id="map_pointer6">
+                    <p>+6</p>
+                    <img src="/img/dis/map_pointer.svg" alt="">
+                </div>
+                <div class="map_pointer" id="map_pointer7">
+                    <p>+7</p>
+                    <img src="/img/dis/map_pointer.svg" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="dystrybutorzy_liczba_container">
+            <div class="dys_liczba_inner">
+                
+            </div>
+        </div>
+
+
+        <div class="zostan_dystrybutorem_container">
+            <div class="zostan_dystrybutorem_inner">
+                <h1>Zostań dystrybutorem ARAGO</h1>
+                <a href="">
+                    <p>Dołącz do nas</p>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+
+
+<script src="../script/script.js"></script>
+<script src="../script/mapLayer.js"></script>
+</body>
+</html>

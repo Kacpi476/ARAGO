@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Kariera</title>
+    <link rel="stylesheet" href="../css/style.css"/>
+</head>
+<body>
+    <%- include('../partials/header') %>
+
+    <div class="career_container">
+        <div class="career_inside">
+        <% if (jobs.length === 0) { %>
+            <p>Brak aktualnych ofert pracy.</p>
+        <% } %>
+
+        <% jobs.forEach(job => { %>
+            <div class="career_post">
+                <div class="career_header">
+                    <h1><%= job.title %></h1>
+                    <p>Wynagrodzenie brutto: <b><%= job.salary %> zł</b></p>
+            </div>
+            <div class="career_desc">
+                <h1>Wymagania i obowiązki:</h1>
+                <p><%= job.description %></p>
+            </div>
+            <div class="career_aplikuj">
+                <a href="<%= job.link %>" target="_blank">
+                    <p>APLIKUJ</p>
+                </a>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+</div>
+
+<script src="../script/script.js"></script>
+</body>
+</html>

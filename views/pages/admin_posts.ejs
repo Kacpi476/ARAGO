@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wpisy</title>
+</head>
+<body>
+    <h1>Lista wpisów</h1>
+    <a href="/admin/add">Dodaj nowy wpis</a> |
+    <a href="/admin">← Wróć do panelu</a>
+    <hr />
+
+    <% if (posts.length > 0) { %>
+        <% posts.forEach(post => { %>
+        <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+            <h3><%= post.title %></h3>
+            <% if (post.image) { %>
+                <img src="<%= post.image %>" width="200" />
+            <% } %>
+            <p><%= post.content.substring(0, 100) %>...</p>
+            <small><%= new Date(post.created_at).toLocaleString() %></small><br /><br />
+            <a href="/admin/edit/<%= post.id %>">Edytuj</a> |
+            <form action="/admin/delete/<%= post.id %>" method="POST" style="display:inline;" onsubmit="return confirm('Na pewno usunąć?');">
+                <button type="submit">Usuń</button>
+            </form>
+        </div>
+        <% }) %>
+    <% } else { %>
+        <p>Brak wpisów.</p>
+    <% } %>
+</body>
+</html>

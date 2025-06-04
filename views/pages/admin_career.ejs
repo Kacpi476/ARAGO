@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head><title>Oferty pracy</title></head>
+<body>
+    <h1>Oferty pracy</h1>
+    <a href="/admin/career/add">Dodaj nową ofertę</a>
+    <hr/>
+    <% offers.forEach(offer => { %>
+    <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+        <h2><%= offer.title %></h2>
+        <p><%= offer.salary %></p>
+        <p><%= offer.description.substring(0, 100) %>...</p>
+        <a href="/admin/career/edit/<%= offer.id %>">Edytuj</a>
+        <form action="/admin/career/delete/<%= offer.id %>" method="POST" style="display:inline;" onsubmit="return confirm('Usunąć ofertę?');">
+            <button type="submit">Usuń</button>
+        </form>
+    </div>
+    <% }) %>
+</body>
+</html>

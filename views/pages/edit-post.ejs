@@ -15,6 +15,9 @@
       <img src="<%= post.image %>" alt="Obrazek" width="150" /><br />
     <% } %>
     <input type="file" name="image" accept="image/*" /><br /><br />
+
+    <label><input type="checkbox" name="featured" <%= post.featured ? 'checked' : '' %> /> Wyróżniony wpis</label><br /><br />
+
   
     <button type="submit">Zapisz zmiany</button>
   </form>
