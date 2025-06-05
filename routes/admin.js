@@ -3,31 +3,86 @@ const router = express.Router();
 const db = require('../config/db');
 const multer = require('multer');
 const path = require('path');
+const slugify = require('slugify');
+const bcrypt = require('bcrypt');
+const rateLimit = require('express-rate-limit');
 
-// === Upload zdjęć dla postów ===
+// Middleware: ogranicz 5 prób logowania na 15 minut z tego samego IP
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minut
+  max: 5, // max 5 prób
+  message: 'Zbyt wiele prób logowania. Spróbuj ponownie za 15 minut.',
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
+
+// Middleware sesji
+function isAuthenticated(req, res, next) {
+  if (req.session.user) return next();
+  res.redirect('/admin/login');
+}
+
+// Upload plików
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'public/uploads/');
-  },
-  filename: function (req, file, cb) {
-    const uniqueName = Date.now() + '-' + file.originalname;
-    cb(null, uniqueName);
-  }
+  destination: (req, file, cb) => cb(null, 'public/uploads/'),
+  filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname)
 });
 const upload = multer({ storage });
 
+// === Logowanie ===
+router.get('/login', (req, res) => {
+  res.render('pages/login', { error: null });
+});
 
-// === Panel główny (nawigacja) ===
-router.get('/', (req, res) => {
-  res.render('pages/admin'); // linki do /admin/posts i /admin/career
+router.post('/login', loginLimiter, async (req, res) => {
+  const { username, password } = req.body;
+  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+
+  try {
+    const [[user]] = await db.query('SELECT * FROM users WHERE username = ?', [username]);
+
+    if (!user) {
+      // loguj nieudaną próbę (nie znaleziono użytkownika)
+      await db.query('INSERT INTO login_attempts (username, ip_address, success) VALUES (?, ?, ?)', [username, ip, false]);
+      return res.render('pages/login', { error: 'Nieprawidłowy login lub hasło' });
+    }
+
+    const match = await bcrypt.compare(password, user.password);
+    const success = !!match;
+
+    // loguj próbę (niezależnie od wyniku)
+    await db.query('INSERT INTO login_attempts (username, ip_address, success) VALUES (?, ?, ?)', [username, ip, success]);
+
+    if (!match) {
+      return res.render('pages/login', { error: 'Nieprawidłowy login lub hasło' });
+    }
+
+    req.session.user = { id: user.id, username: user.username };
+    res.redirect('/admin');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Błąd logowania');
+  }
+});
+
+router.get('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if (err) return res.status(500).send('Błąd przy wylogowaniu');
+    res.redirect('/admin/login');
+  });
 });
 
 
-// ========================= POSTY ========================= //
+// === Panel admina ===
+router.get('/', isAuthenticated, (req, res) => {
+  res.render('pages/admin');
+});
 
-router.get('/posts', async (req, res) => {
+// === POSTY ===
+router.get('/posts', isAuthenticated, async (req, res) => {
   try {
-    const [posts] = await db.query('SELECT * FROM posts ORDER BY featured DESC, created_at DESC;');
+    const [posts] = await db.query('SELECT * FROM posts ORDER BY featured DESC, created_at DESC');
     res.render('pages/admin_posts', { posts });
   } catch (err) {
     console.error(err);
@@ -35,11 +90,11 @@ router.get('/posts', async (req, res) => {
   }
 });
 
-router.get('/add', async (req, res) => {
+router.get('/add', isAuthenticated, (req, res) => {
   res.render('pages/add-post');
 });
 
-router.post('/addpost', upload.single('image'), async (req, res) => {
+router.post('/addpost', isAuthenticated, upload.single('image'), async (req, res) => {
   const { title, content, featured } = req.body;
   const image = req.file ? '/uploads/' + req.file.filename : null;
 
@@ -50,52 +105,49 @@ router.post('/addpost', upload.single('image'), async (req, res) => {
     );
     res.redirect('/admin/posts');
   } catch (err) {
-    console.error('Błąd przy dodawaniu wpisu:', err);
-    res.status(500).send('Wystąpił błąd przy dodawaniu wpisu');
+    console.error(err);
+    res.status(500).send('Błąd przy dodawaniu posta');
   }
 });
 
-router.get('/edit/:id', async (req, res) => {
-  const postId = req.params.id;
+router.get('/edit/:id', isAuthenticated, async (req, res) => {
   try {
-    const [[post]] = await db.query('SELECT * FROM posts WHERE id = ?', [postId]);
+    const [[post]] = await db.query('SELECT * FROM posts WHERE id = ?', [req.params.id]);
     if (!post) return res.status(404).send('Nie znaleziono posta');
     res.render('pages/edit-post', { post });
   } catch (err) {
     console.error(err);
-    res.status(500).send('Błąd ładowania formularza edycji');
+    res.status(500).send('Błąd ładowania edycji');
   }
 });
 
-router.post('/edit/:id', upload.single('image'), async (req, res) => {
-  const postId = req.params.id;
+router.post('/edit/:id', isAuthenticated, upload.single('image'), async (req, res) => {
   const { title, content, featured } = req.body;
-  const newImage = req.file ? '/uploads/' + req.file.filename : null;
+  const image = req.file ? '/uploads/' + req.file.filename : null;
 
   try {
-    if (newImage) {
+    if (image) {
       await db.query(
         'UPDATE posts SET title = ?, content = ?, image = ?, featured = ? WHERE id = ?',
-        [title, content, newImage, featured ? 1 : 0, postId]
+        [title, content, image, featured ? 1 : 0, req.params.id]
       );
     } else {
       await db.query(
         'UPDATE posts SET title = ?, content = ?, featured = ? WHERE id = ?',
-        [title, content, featured ? 1 : 0, postId]
+        [title, content, featured ? 1 : 0, req.params.id]
       );
     }
 
     res.redirect('/admin/posts');
   } catch (err) {
-    console.error('Błąd przy edycji posta:', err);
-    res.status(500).send('Błąd przy aktualizacji posta');
+    console.error(err);
+    res.status(500).send('Błąd przy edycji posta');
   }
 });
 
-router.post('/delete/:id', async (req, res) => {
-  const postId = req.params.id;
+router.post('/delete/:id', isAuthenticated, async (req, res) => {
   try {
-    await db.query('DELETE FROM posts WHERE id = ?', [postId]);
+    await db.query('DELETE FROM posts WHERE id = ?', [req.params.id]);
     res.redirect('/admin/posts');
   } catch (err) {
     console.error(err);
@@ -103,25 +155,22 @@ router.post('/delete/:id', async (req, res) => {
   }
 });
 
-
-// ========================= KARIERA ========================= //
-
-router.get('/career', async (req, res) => {
+// === KARIERA ===
+router.get('/career', isAuthenticated, async (req, res) => {
   try {
     const [offers] = await db.query('SELECT * FROM career_offers ORDER BY created_at DESC');
     res.render('pages/admin_career', { offers });
   } catch (err) {
     console.error(err);
-    res.status(500).send('Błąd ładowania ofert pracy');
+    res.status(500).send('Błąd ładowania ofert');
   }
 });
 
-// Dodawanie oferty
-router.get('/career/add', (req, res) => {
+router.get('/career/add', isAuthenticated, (req, res) => {
   res.render('pages/add-career');
 });
 
-router.post('/career/add', async (req, res) => {
+router.post('/career/add', isAuthenticated, async (req, res) => {
   const { title, salary, description, link } = req.body;
   try {
     await db.query(
@@ -131,15 +180,13 @@ router.post('/career/add', async (req, res) => {
     res.redirect('/admin/career');
   } catch (err) {
     console.error(err);
-    res.status(500).send('Błąd przy dodawaniu oferty pracy');
-}
+    res.status(500).send('Błąd przy dodawaniu oferty');
+  }
 });
 
-// Edycja oferty
-router.get('/career/edit/:id', async (req, res) => {
-  const id = req.params.id;
+router.get('/career/edit/:id', isAuthenticated, async (req, res) => {
   try {
-    const [[offer]] = await db.query('SELECT * FROM career_offers WHERE id = ?', [id]);
+    const [[offer]] = await db.query('SELECT * FROM career_offers WHERE id = ?', [req.params.id]);
     if (!offer) return res.status(404).send('Nie znaleziono oferty');
     res.render('pages/edit-career', { offer });
   } catch (err) {
@@ -148,14 +195,12 @@ router.get('/career/edit/:id', async (req, res) => {
   }
 });
 
-
-router.post('/career/edit/:id', async (req, res) => {
-  const id = req.params.id;
+router.post('/career/edit/:id', isAuthenticated, async (req, res) => {
   const { title, salary, description, link } = req.body;
   try {
     await db.query(
       'UPDATE career_offers SET title = ?, salary = ?, description = ?, link = ? WHERE id = ?',
-      [title, salary, description, link, id]
+      [title, salary, description, link, req.params.id]
     );
     res.redirect('/admin/career');
   } catch (err) {
@@ -164,12 +209,9 @@ router.post('/career/edit/:id', async (req, res) => {
   }
 });
 
-
-// Usuwanie oferty
-router.post('/career/delete/:id', async (req, res) => {
-  const id = req.params.id;
+router.post('/career/delete/:id', isAuthenticated, async (req, res) => {
   try {
-    await db.query('DELETE FROM career_offers WHERE id = ?', [id]);
+    await db.query('DELETE FROM career_offers WHERE id = ?', [req.params.id]);
     res.redirect('/admin/career');
   } catch (err) {
     console.error(err);
@@ -177,54 +219,69 @@ router.post('/career/delete/:id', async (req, res) => {
   }
 });
 
-// ================= CAROUSEL ================= //
-
-router.get('/carousel', (req, res) => {
+// === CAROUSEL ===
+router.get('/carousel', isAuthenticated, (req, res) => {
   res.render('pages/admin_carousel');
 });
 
-router.get('/carousel/edit/:id', async (req, res) => {
-  const postId = parseInt(req.params.id);
-  if (![1, 2, 3].includes(postId)) return res.status(403).send('Nieautoryzowany dostęp');
-
+router.get('/carousel/edit/:id', isAuthenticated, async (req, res) => {
+  const id = parseInt(req.params.id);
+  if (![1, 2, 3].includes(id)) return res.status(403).send('Nieautoryzowany dostęp');
   try {
-    const [[post]] = await db.query('SELECT * FROM carousel WHERE id = ?', [postId]);
+    const [[post]] = await db.query('SELECT * FROM carousel WHERE id = ?', [id]);
     if (!post) return res.status(404).send('Nie znaleziono posta');
     res.render('pages/carousel-edit', { post });
   } catch (err) {
     console.error(err);
-    res.status(500).send('Błąd ładowania formularza');
+    res.status(500).send('Błąd ładowania posta');
   }
 });
 
-router.post('/carousel/edit/:id', upload.single('image'), async (req, res) => {
-  const postId = parseInt(req.params.id);
-  if (![1, 2, 3].includes(postId)) return res.status(403).send('Nieautoryzowany dostęp');
+router.post('/carousel/edit/:id', isAuthenticated, upload.single('image'), async (req, res) => {
+  const id = parseInt(req.params.id);
+  if (![1, 2, 3].includes(id)) return res.status(403).send('Nieautoryzowany dostęp');
 
-  const { title, category, description, content, link } = req.body;
-  const newImage = req.file ? '/uploads/' + req.file.filename : null;
+  const { title, category, description, content } = req.body;
+  const image = req.file ? '/uploads/' + req.file.filename : null;
+  const slug = slugify(title, { lower: true, strict: true });
+  const link = `/blog/${slug}-${id}`;
 
   try {
-    if (newImage) {
+    if (image) {
       await db.query(
         'UPDATE carousel SET title = ?, category = ?, description = ?, content = ?, link = ?, image = ? WHERE id = ?',
-        [title, category, description, content, link, newImage, postId]
+        [title, category, description, content, link, image, id]
       );
     } else {
       await db.query(
         'UPDATE carousel SET title = ?, category = ?, description = ?, content = ?, link = ? WHERE id = ?',
-        [title, category, description, content, link, postId]
+        [title, category, description, content, link, id]
       );
     }
-
     res.redirect('/admin/carousel');
   } catch (err) {
-    console.error('Błąd przy edycji posta karuzeli:', err);
-    res.status(500).send('Błąd aktualizacji posta');
+    console.error(err);
+    res.status(500).send('Błąd przy edycji posta karuzeli');
   }
 });
 
+// ======= PODGLĄD LOGÓW LOGOWANIA =======
 
+router.get('/logs',isAuthenticated, async (req, res) => {
+  try {
+    const [logs] = await db.query(`
+      SELECT id, username, ip_address, success, created_at
+      FROM login_attempts
+      ORDER BY created_at DESC
+      LIMIT 100
+    `);
+
+    res.render('pages/admin_logs', { logs });
+  } catch (err) {
+    console.error('Błąd podczas pobierania logów:', err);
+    res.status(500).send('Błąd podczas pobierania logów');
+  }
+});
 
 
 module.exports = router;

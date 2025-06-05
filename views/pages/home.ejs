@@ -55,7 +55,7 @@
                 <h1><%= post.title %></h1>
                 <p><%= post.content%></p>
             </div>
-            <a href="/blog/<%= post.id %>" class="post_pointer">
+            <a href="/blog/<%= post.slug %>-<%= post.id %>" class="post_pointer">
                 <img src="/img/home/pointer.svg" alt="pointer"/>
             </a>
         </div>
@@ -68,12 +68,11 @@
 <h1>Main page</h1>
 <nav>
     <a href="/admin">Panel administratora</a>
-    <a href="/login">Login</a>
+    <a href="/admin/login">Login</a>
 </nav>
 
 <script>
     const carouselData = <%- JSON.stringify(carouselItems) %>;
-    console.log(carouselData);
 </script>
 <script src="../script/script.js"></script>
 <script src="../script/home.js"></script>

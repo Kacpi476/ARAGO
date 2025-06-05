@@ -1,28 +1,127 @@
 <!DOCTYPE html>
-<html>
-<head><title>Edytuj post</title></head>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <title>Edytuj post</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f7fa;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    form {
+      background: #fff;
+      padding: 50px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      max-width: 600px;
+      width: 100%;
+    }
+
+    label {
+      font-weight: 600;
+      color: #34495e;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    textarea,
+    input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    img {
+      margin-bottom: 10px;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    input[type="checkbox"] {
+      margin-right: 8px;
+      transform: scale(1.2);
+      vertical-align: middle;
+    }
+
+    button {
+      background-color: #2980b9;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #1f6391;
+    }
+
+    a.back-link {
+      display: inline-block;
+      margin-top: 20px;
+      text-decoration: none;
+      color: #3498db;
+      font-size: 14px;
+    }
+
+    a.back-link:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      form {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
 <body>
   <h1>Edytuj wpis</h1>
+
   <form action="/admin/edit/<%= post.id %>" method="POST" enctype="multipart/form-data">
-    <label>Tytuł:</label><br />
-    <input type="text" name="title" value="<%= post.title %>" required /><br /><br />
-  
-    <label>Treść:</label><br />
-    <textarea name="content" rows="10" cols="50" required><%= post.content %></textarea><br /><br />
-  
-    <label>Obrazek:</label><br />
+    <label for="title">Tytuł:</label>
+    <input type="text" id="title" name="title" value="<%= post.title %>" required />
+
+    <label for="content">Treść:</label>
+    <textarea id="content" name="content" rows="10" required><%= post.content %></textarea>
+
+    <label>Obrazek:</label>
     <% if (post.image) { %>
-      <img src="<%= post.image %>" alt="Obrazek" width="150" /><br />
+      <img src="<%= post.image %>" alt="Obrazek" width="150" />
     <% } %>
-    <input type="file" name="image" accept="image/*" /><br /><br />
+    <input type="file" name="image" accept="image/*" />
 
-    <label><input type="checkbox" name="featured" <%= post.featured ? 'checked' : '' %> /> Wyróżniony wpis</label><br /><br />
+    <label>
+      <input type="checkbox" name="featured" <%= post.featured ? 'checked' : '' %> />
+      Wyróżniony wpis
+    </label>
 
-  
     <button type="submit">Zapisz zmiany</button>
   </form>
-  
-  <br />
-  <a href="/admin">← Wróć do panelu</a>
+
+  <a class="back-link" href="/admin/posts">← Powrót do postów</a>
 </body>
 </html>

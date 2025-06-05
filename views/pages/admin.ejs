@@ -1,16 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="pl">
 <head>
+    <meta charset="UTF-8">
     <title>Panel Administratora</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            margin-top: 40px;
+            font-size: 32px;
+            color: #333;
+        }
+
+        nav {
+            margin-top: 30px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            padding: 30px 50px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        li a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            font-size: 18px;
+            padding: 12px 18px;
+            display: block;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        li a:hover {
+            background: #3498db;
+            color: white;
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                width: 90%;
+                padding: 20px;
+            }
+
+            li a {
+                font-size: 16px;
+                padding: 10px 14px;
+            }
+        }
+    </style>
 </head>
 <body>
     <h1>Panel Administratora</h1>
 
-    <nav style="margin-bottom: 20px;">
+    <nav>
         <ul>
             <li><a href="/admin/posts">Zarządzaj wpisami</a></li>
             <li><a href="/admin/career">Zarządzaj ofertami pracy</a></li>
             <li><a href="/admin/carousel">Zarządzaj karuzelą</a></li>
+            <li><a href="/admin/logs">Logi logowania</a></li>
+            <li><a href="/admin/logout">Wyloguj</a></li>
         </ul>
     </nav>
 </body>

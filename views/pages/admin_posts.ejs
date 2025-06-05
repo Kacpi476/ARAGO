@@ -1,31 +1,149 @@
 <!DOCTYPE html>
-<html>
+<html lang="pl">
 <head>
+    <meta charset="UTF-8">
     <title>Wpisy</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .nav {
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .nav a {
+            text-decoration: none;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .nav a:hover {
+            background-color: #2980b9;
+        }
+
+        .post {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .post img {
+            max-width: 200px;
+            height: auto;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+
+        .post h3 {
+            margin: 0 0 10px;
+            color: #2c3e50;
+        }
+
+        .post p {
+            color: #555;
+        }
+
+        .post small {
+            color: #888;
+        }
+
+        .actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .actions a,
+        .actions button {
+            background-color: #3498db;
+            color: white;
+            padding: 8px 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+
+        .actions a:hover {
+            background-color: #27ae60;
+        }
+
+        .actions form {
+            display: inline;
+        }
+
+        .actions button:hover {
+            background-color: #c0392b;
+        }
+
+        .no-posts {
+            color: #666;
+            font-style: italic;
+        }
+
+        @media (max-width: 600px) {
+            .post {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
 </head>
 <body>
     <h1>Lista wpisów</h1>
-    <a href="/admin/add">Dodaj nowy wpis</a> |
-    <a href="/admin">← Wróć do panelu</a>
-    <hr />
+
+    <div class="nav">
+        <a href="/admin/add">➕ Dodaj nowy wpis</a>
+        <a href="/admin">← Wróć do panelu</a>
+    </div>
 
     <% if (posts.length > 0) { %>
         <% posts.forEach(post => { %>
-        <div style="border:1px solid #ccc; padding:10px; margin-bottom:10px;">
+        <div class="post">
             <h3><%= post.title %></h3>
             <% if (post.image) { %>
-                <img src="<%= post.image %>" width="200" />
+                <img src="<%= post.image %>" alt="Obrazek wpisu">
             <% } %>
             <p><%= post.content.substring(0, 100) %>...</p>
-            <small><%= new Date(post.created_at).toLocaleString() %></small><br /><br />
-            <a href="/admin/edit/<%= post.id %>">Edytuj</a> |
-            <form action="/admin/delete/<%= post.id %>" method="POST" style="display:inline;" onsubmit="return confirm('Na pewno usunąć?');">
-                <button type="submit">Usuń</button>
-            </form>
+            <small><%= new Date(post.created_at).toLocaleString() %></small>
+
+            <div class="actions">
+                <a href="/admin/edit/<%= post.id %>">Edytuj</a>
+                <form action="/admin/delete/<%= post.id %>" method="POST" onsubmit="return confirm('Na pewno usunąć?');">
+                    <button type="submit">Usuń</button>
+                </form>
+            </div>
         </div>
         <% }) %>
     <% } else { %>
-        <p>Brak wpisów.</p>
+        <p class="no-posts">Brak wpisów.</p>
     <% } %>
 </body>
 </html>
