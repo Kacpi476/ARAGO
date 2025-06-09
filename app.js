@@ -10,7 +10,7 @@ const dbOptions = {
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
     ssl: {
-        rejectUnauthorized: true
+        rejectUnauthorized: false
     }
 };
 
