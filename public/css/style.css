@@ -66,11 +66,49 @@ header {
     justify-content: center;
     gap: 32px;
 }
-.nav a{
+.nav a {
+    position: relative;
     text-decoration: none;
     color: #0B121580;
     font-size: 16px;
-    font-weight: 400;
+    padding-bottom: 4px;
+    overflow: hidden;
+    transition: color 0.5s ease, font-weight 0.5s ease;
+    font-variation-settings: "wght" 400;
+}
+.nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    width: 0;
+    background-color: black;
+    transition: width 0.5s ease-in-out;
+}
+
+.nav a:hover,
+.nav a.active {
+    color: black;
+    font-variation-settings: "wght" 700;
+}
+.nav a:hover{
+    transition: all 0.5s ease-in-out;
+}
+.nav a.active {
+    color: black !important;
+}
+
+/* Efekt hover — animacja od lewej do prawej */
+.nav a:hover::after {
+    width: 100%;
+}
+
+/* Opcjonalnie: aktywny link (czyli .active) z pełną linią */
+.nav a.active::after {
+    width: 100%;
+    background-color: black;
+    
 }
 
 #nav_kontakt {
@@ -94,21 +132,6 @@ header {
     color: #F8F8FF;
     font-size: 16px;
     font-weight: 600;
-}
-
-.active {
-    border-bottom: 1px solid black;
-    color: black !important;
-    transition: all 0.5s ease;
-    font-weight: bold !important;
-}
-
-.nav a:hover {
-    border-bottom: 1px solid black;
-    color: black !important;
-    transition: all 0.5s ease;
-    padding-bottom: 4px;
-    font-weight: bold;
 }
 
 .nav_button:hover, .menu_button:hover {
@@ -306,7 +329,7 @@ header {
     min-height: 600px;
     padding: 0px 24px;
     position: relative;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
 }
 
 .carousel {
@@ -332,22 +355,26 @@ header {
 }
 
 .carousel {
-    transition: background-image 0.4s ease-in-out, background 0.4s ease-in-out;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
+
+
 .carousel_category,
 .carousel_article_title,
 .bottom-right_info p {
-    transition: opacity 0.3s ease;
+    transition: all 0.2s ease-in-out;
     opacity: 1;
+    transform: translateY(0);
 }
 
 .carousel_text_fade,
 .carousel_info_fade {
+    transition: all 0.2s ease-in-out;
     opacity: 0;
+    transform: translateY(10px);
 }
 
 
@@ -383,6 +410,7 @@ header {
     transition: all 200ms ease;
     transition-delay: 0s;
     z-index: 2;
+    user-select: none;
 }
 
 .circle.active {
@@ -452,6 +480,7 @@ header {
     margin: 0px 30px;
     margin-bottom: 10px;
     background-color: #f8f8ff;
+    cursor: pointer;
 }
 
 .bottom-right_learnmore{
@@ -486,6 +515,7 @@ header {
 @media (max-width: 800px) {
     .main_carousel{
         min-height: 450px !important;
+        margin-bottom: 12px !important;
     }
     .carousel{
         height: 450px !important;
@@ -521,7 +551,7 @@ header {
     }
 
     .post_container{
-        padding: 10px 24px !important;
+        padding: 12px 24px !important;
     }
 
     .post_img{
@@ -1076,6 +1106,7 @@ header {
 .arago_container img,
 .clarb_container img {
     transition: opacity 0.2s ease-in-out;
+    opacity: 0.5;
     
 }
 
@@ -1132,6 +1163,7 @@ header {
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
+    gap: 24px;
 }
 .header_mobile_text {
     width: 100%;
@@ -1142,7 +1174,6 @@ header {
 }
 
 .carousel_header_switch{
-    width: 10%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -1247,6 +1278,7 @@ input:checked + .slider:before {
     display: flex;
     flex-direction: column;
     align-items: center;
+    top: -40px;
     padding: 1rem;
 }
 
@@ -1263,8 +1295,8 @@ input:checked + .slider:before {
 
 
 .carousel_products img {
-    object-fit: cover;
-    width: 400px;
+    object-fit: fill;
+    height: 450px;
     aspect-ratio: 2 / 3;
     flex-shrink: 0;
     filter: blur(2px);
@@ -1275,7 +1307,7 @@ input:checked + .slider:before {
 
 @media (max-width: 1250px) {
     .carousel_products img {
-        width: 350px;
+        height: 400px;
     }
     .carousel_header {
         gap: 30px;
@@ -1283,7 +1315,7 @@ input:checked + .slider:before {
 }
 @media (max-width: 1050px) {
     .carousel_products img {
-        width: 300px;
+        height: 350px;
     }
     .carousel_header{
         padding-left: 40px;
@@ -1305,12 +1337,14 @@ input:checked + .slider:before {
     }
 }
 @media (max-width: 850px) {
+    
     .carousel_products img {
-        width: 250px;
+        height: 300px;
     }
     .carousel_header{
-        padding-left: 30px;
-        padding-right: 30px;
+        padding-left: 24px;
+        padding-right: 24px;
+        gap: 10px;
     }
     .carousel_dots {
         transform: scale(0.7);
@@ -1327,14 +1361,18 @@ input:checked + .slider:before {
     .product_download_description {
         display: none;
     }
+
+    #carouselTitle {
+        font-size: 35px;
+    }
 }
 
 @media (max-width: 650px) {
     .carousel_products img {
-        width: 180px;
+        height: 250px;
     }
     #carouselTitle {
-        font-size: 40px;
+        font-size: 30px;
     }
     #carouselText {
         font-size: 25px;
@@ -1348,8 +1386,8 @@ input:checked + .slider:before {
     .product_download {
         width: 150px !important;
         height: 50px !important;
-        bottom: 5px !important;
-        padding: 10px !important;
+        bottom: 0px !important;
+        padding: 12px !important;
         align-items: center !important; 
         justify-content: center !important;
         right: 35px !important;
@@ -1370,17 +1408,18 @@ input:checked + .slider:before {
         height: 35px;
     }
     .product_info_container {
-        padding-right: 30px !important;
-        padding-left: 30px !important;
+        padding-right: 24px !important;
+        padding-left: 24px !important;
     }
+    
 }   
 @media (max-width: 500px) {
     .carousel_products img {
-        width: 150px;
+        height: 225px;
     }
     #carouselTitle {
-        font-size: 30px;
-        line-height: 30px;
+        font-size: 25px;
+        line-height: 25px;
     }
     #carouselText {
         font-size: 20px;
@@ -1398,26 +1437,42 @@ input:checked + .slider:before {
     .product_text {
         font-size: 8px !important;
     }
+    .carousel_header{
+        padding-left: 12px;
+        padding-right: 12px;
+        gap: 0px;
+    }
+    
+    .carousel_header_switch{
+        transform: scale(0.8);
+    }
 }
 @media (max-width: 425px) {
     .carousel_products img {
-        width: 125px;
+        height: 200px;
+    }
+    #carouselTitle {
+        font-size: 20px;
+        line-height: 20px;
+    }
+    #carouselText {
+        font-size: 12px;
     }
 }
 @media (max-width: 375px) {
     .carousel_products img {
-        width: 100px;
+        height: 150px;
     }
     .product_download {
         width: 120px !important;
         height: 50px !important;
-        bottom: 5px !important;
+        bottom: 0px !important;
         transform: scale(0.8);
     }
 }
 @media (max-width: 320px) {
     .carousel_products img {
-        width: 90px;
+        height: 120px;
     }
     .product_download {
         transform: scale(0.7);
@@ -1459,8 +1514,10 @@ input:checked + .slider:before {
 
 
 .carousel_dots {
+    position: relative;
     width: 100%;
-    min-height: 70px;
+    top: -40px;
+    
 }
 .carousel_dots {
     display: flex;
@@ -1513,6 +1570,8 @@ input:checked + .slider:before {
     padding-right: 64px;
     padding-bottom: 64px;
     gap: 8px;
+    position: relative;
+    top: -40px;
 }
 #product_info_h1{
     font-size: 24px;
@@ -1521,7 +1580,7 @@ input:checked + .slider:before {
     padding: 4px 24px 4px 24px;
     border: 1px solid black;
     border-radius: 50px;
-    margin-top: 32px;
+    margin-top: 24px;
 }
 
 .product_info_container_wlasciwosci,
@@ -1571,7 +1630,7 @@ input:checked + .slider:before {
     flex-direction: column;
     align-items: flex-start;
     justify-content: space-between;
-    bottom: -50px;
+    bottom: -24px;
     right: 64px;
     z-index: 1;
 }
@@ -1971,6 +2030,9 @@ input:checked + .slider:before {
         transform: scale(0.50);
         padding: 0;
     }
+    .dystrybutorzy_header {
+        padding-top : 0px !important;
+    }
     .dystrybutorzy_header h1 {
         font-size: 35px;
     }
@@ -2307,7 +2369,7 @@ input:checked + .slider:before {
     background-color: rgba(248, 248, 255, 0.75);
     border: 1px solid #0B121540;
     border-radius: 40px;
-    color: #0B121540;
+    color: black;
     font-size: 16px;
     font-weight: 700;
     line-height: 21px;
@@ -2329,7 +2391,7 @@ input:checked + .slider:before {
     background-color: rgba(248, 248, 255, 0.75);
     border: 1px solid #0B121540;
     border-radius: 40px;
-    color: #0B121540;
+    color: black;
     font-size: 16px;
     font-weight: 700;
     line-height: 21px;

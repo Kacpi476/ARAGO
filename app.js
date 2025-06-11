@@ -20,6 +20,7 @@ const app = express();
 // Widoki EJS
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.set('trust proxy', true);
 
 // Middleware
 app.use(express.urlencoded({ extended: false }));
