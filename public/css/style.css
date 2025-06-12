@@ -345,7 +345,7 @@ header {
     align-items: flex-start;
     
     -webkit-mask: url('/img/home/main_bottomright_mask.png') center / contain no-repeat,linear-gradient(#000000 0 0);
-    mask-size: 30rem;
+    mask-size: 29rem 15rem;
     mask-position: bottom right;
     mask-composite: exclude;
     z-index: 0;
@@ -477,8 +477,8 @@ header {
     border-radius: 2.5rem;
     bottom: 0%;
     right: 0%;
-    margin: 0px 30px;
-    margin-bottom: 10px;
+    margin: 0px 24px;
+    margin-bottom: 0px;
     background-color: #f8f8ff;
     cursor: pointer;
 }
@@ -519,14 +519,14 @@ header {
     }
     .carousel{
         height: 450px !important;
-        mask-size: 16rem !important;
+        mask-size: 16rem 7.5rem !important;
 
     }
     .bottom-right {
         width: 210px !important;
         height: 80px !important;
         margin-right: 24px !important;
-        margin-bottom: 10px !important;
+        margin-bottom: 0px !important;
     }
     .bottom-right_info{
         display: none;
@@ -572,7 +572,7 @@ header {
         border-radius: 16px;
         height: 300px !important;
         gap: 0 !important;
-        mask-size: 10rem !important;
+        mask-size: 10rem 5.2rem !important;
     }
     .carousel_category {
         font-size: 12px !important;
@@ -601,7 +601,7 @@ header {
         width: 130px !important;
         height: 55px !important;
         margin-right: 25px !important;
-        margin-bottom: 5px !important;
+        margin-bottom: 0px !important;
     }
     .button {
         padding: 10px !important;
@@ -655,7 +655,6 @@ header {
 .post_container {
     width: 100%;
     height: 100%;
-    min-height: 230px;
     padding: 24px;
     padding-top: 0px;
 }
@@ -663,7 +662,6 @@ header {
 .post_container_inner{
     width: 100%;
     height: 100%;
-    min-height: 230px;
     padding: 16px;
     padding-right: 75px;
     gap: 40px;
@@ -1702,11 +1700,12 @@ input:checked + .slider:before {
     align-items: flex-start;
     justify-content: center;
     margin-bottom: 100px;
+    bottom: 15px;
 }
 .map_img{
     position: relative;
-    min-height: 850px;
-    min-width: 840px;
+    min-height: 600px;
+    min-width: 600px;
     background-image: url('/img/dis/map_poland.svg');
     background-size: cover;
     background-position: center;
@@ -1721,40 +1720,41 @@ input:checked + .slider:before {
     color: #324498;
     cursor: pointer;
     transition: transform 0.2s ease;
+    transform: scale(0.8);
 }
 #map_pointer1 {
-    bottom: 108px;
-    right: 306px;
+    bottom: 80px;
+    right: 219px;
 }
 
 #map_pointer2 {
-    bottom: 188px;
-    right: 412px;
+    bottom: 130px;
+    right: 286px;
 }
 
 #map_pointer3 {
-    bottom: 224px;
-    right: 500px;
+    bottom: 150px;
+    right: 350px;
 }
 
 #map_pointer4 {
-    bottom: 281px;
-    right: 617px;
+    bottom: 200px;
+    right: 435px;
 }
 
 #map_pointer5 {
-    bottom: 231px;
-    right: 267px;
+    bottom: 150px;
+    right: 185px;
 }
 
 #map_pointer6 {
-    bottom: 449px;
-    right: 236px;
+    bottom: 300px;
+    right: 160px;
 }
 
 #map_pointer7 {
-    bottom: 687px;
-    right: 500px;
+    bottom: 480px;
+    right: 350px;
 }
 
 .zostan_dystrybutorem_container {
@@ -1809,6 +1809,7 @@ input:checked + .slider:before {
     flex-direction: row;
     transform: scale(0.8);
     transition: opacity 0.3s ease, transform 0.3s ease;
+    bottom: 30px;
 }
 
 .map_layer_text_column {
@@ -1849,7 +1850,7 @@ input:checked + .slider:before {
 }
 
 .map_layer_close {
-    display: block;
+    display: none;
     position: absolute;
     right: 50px;
     top: 100px;
@@ -1884,30 +1885,8 @@ input:checked + .slider:before {
 }
 
 
-@media (max-width: 1250px) {
-    .map_img {
-        transform: scale(0.9);
-        bottom: 60px;
-    }
-    .map_layer{
-        bottom: 120px;
-    }
-    .dystrybutorzy_mapa {
-        margin-bottom: 50px;
-    }
-}
 
 @media (max-width: 1050px){
-    .map_img {
-        transform: scale(0.75);
-        bottom: 120px;
-    }
-    .dystrybutorzy_mapa {
-        margin-bottom: 0px !important;
-    }
-    .zostan_dystrybutorem_container {
-        bottom: 100px;
-    }
     .zostan_dystrybutorem_inner h1 {
         font-size: 26px;
     }
@@ -1917,12 +1896,16 @@ input:checked + .slider:before {
 }
 
 @media (max-width: 800px){
-    .map_img {
-        transform: scale(0.65);
-        bottom: 160px;
+    .dystrybutorzy_mapa {
+        transform: scale(0.8);
+        margin-bottom: 10px !important;
+    }
+    .map_img{
+        bottom: 50px;
     }
     .map_layer{
-        transform: scale(0.65);
+        transform: scale(1);
+        bottom: 40px;
         flex-direction: column-reverse;
     }
     .map_layer_text_column {
@@ -1981,19 +1964,19 @@ input:checked + .slider:before {
         font-weight: 700;
         line-height: 24px;
         color: #324498;
-
     }
-
+.map_layer_text_column {
+    overflow: scroll;
+}
 }
 
 @media (max-width: 650px){
-    .map_img {
-        transform: scale(0.55);
-        bottom: 180px;
+    .dystrybutorzy_mapa {
+        transform: scale(0.7);
+        margin-bottom: 10px !important;
     }
-    .map_layer{
-        transform: scale(0.55);
-        bottom: 200px;
+    .map_img{
+        bottom: 100px;
     }
     .dystrybutorzy_header h1 {
         font-size: 40px;
@@ -2022,13 +2005,18 @@ input:checked + .slider:before {
 
 
 @media (max-width: 550px){
-    .map_img {
-        transform: scale(0.5);
-        bottom: 220px;
+    .dystrybutorzy_mapa {
+        transform: scale(0.7);
+        margin-bottom: 50px !important;
+        bottom: 30px;
+    }
+    .map_img{
+        bottom: 100px;
     }
     .map_layer{
-        transform: scale(0.50);
         padding: 0;
+        transform: scale(0.7);
+        bottom: 120px;
     }
     .dystrybutorzy_header {
         padding-top : 0px !important;
@@ -2067,9 +2055,13 @@ input:checked + .slider:before {
 
 
 @media (max-width: 450px){
-    .map_img {
-        transform: scale(0.45);
-        bottom: 230px;
+    .dystrybutorzy_mapa {
+        transform: scale(0.65);
+        margin-bottom: 10px !important;
+        bottom: 45px;
+    }
+    .map_img{
+        bottom: 100px;
     }
     .dystrybutorzy_header h1 {
         font-size: 28px;
@@ -2088,9 +2080,13 @@ input:checked + .slider:before {
 }
 
 @media (max-width: 400px){
-    .map_img {
-        transform: scale(0.40);
-        bottom: 240px;
+    .dystrybutorzy_mapa {
+        transform: scale(0.60);
+        margin-bottom: 10px !important;
+        bottom: 60px;
+    }
+    .map_img{
+        bottom: 100px;
     }
     .dystrybutorzy_header h1 {
         font-size: 24px;
@@ -2112,9 +2108,10 @@ input:checked + .slider:before {
 }
 
 @media (max-width: 350px){
-    .map_img {
-        transform: scale(0.35);
-        bottom: 260px;
+    .dystrybutorzy_mapa {
+        transform: scale(0.50);
+        margin-bottom: 0px !important;
+        bottom: 100px;
     }
     .dystrybutorzy_header h1 {
         font-size: 20px;
